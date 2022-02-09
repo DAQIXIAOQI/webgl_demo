@@ -16,7 +16,7 @@ module.exports = {
         ...{
           title: 'Babylon',
           files: {},
-          template: 'src/page/Hello/index.html',
+          template: 'src/page/babylon/index.html',
         },
       }
       return args
