@@ -1,8 +1,8 @@
 import './index.scss'
 import React, {useEffect} from 'react'
 import createScene from './main'
-// import * as BABYLON from 'babylonjs'
-// import 'babylonjs-loaders'
+import * as BABYLON from 'babylonjs'
+import 'babylonjs-loaders'
 
 // const createScene = function (canvas: any, engine: any) {
 //   // Create a basic BJS Scene object.
@@ -52,27 +52,52 @@ const BabyLon = () => {
         }
       })
 
-    if (scene) {
-      // // Create a default skybox with an environment.
-      // var hdrTexture = BABYLON.CubeTexture.CreateFromPrefilteredData("http://bdgamelive.com:5000/textures/environment.dds", scene);
-      // var currentSkybox = scene.createDefaultSkybox(hdrTexture, true);
-      const light = new BABYLON.PointLight('pointLight', new BABYLON.Vector3(0, 0, 0), scene)
-      light.setEnabled(true)
-    }
+    // if (scene) {
+    //   var skybox = BABYLON.Mesh.CreateBox("skyBox", 100.0, scene);
+    //   var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
+    //   skyboxMaterial.backFaceCulling = false;
+    //   skyboxMaterial.disableLighting = true;
+    //   // skybox.material = skyboxMaterial;
+
+    //   skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("http://172.29.137.109:5000/textures/environment.dds", scene);
+
+    //   scene.createDefaultSkybox(skyboxMaterial.reflectionTexture, true, 10000)
+    // }
+
+    // scene && scene.createDefaultCameraOrLight(true, true, true)
+
+    // sceneToRender = scene
 
     BABYLON.SceneLoader.Append(
-      'http://172.29.137.109:5000/AnimatedCube/',
-      'AnimatedCube.gltf',
+      'https://gw.alipayobjects.com/os/bmw-prod/',
+      'f40ef8dd-4c94-41d4-8fac-c1d2301b6e47.glb',
       scene,
-      function (scene: any) {
+      function (scene) {
         // Create a default arc rotate camera and light.
+        // scene.createDefaultCamera(true, true, true)
         scene.createDefaultCameraOrLight(true, true, true)
-        const light = new BABYLON.DirectionalLight('DirectionalLight', new BABYLON.Vector3(0.1, 1, 0), scene)
-        light.setEnabled(true)
-        light.diffuse = new BABYLON.Color3(1, 1, 1)
+        // const light = new BABYLON.DirectionalLight('DirectionalLight', new BABYLON.Vector3(0.1, 1, 0), scene)
+        // light.setEnabled(true)
+        // light.diffuse = new BABYLON.Color3(1, 1, 1)
         // The default camera looks at the back of the asset.
         // Rotate the camera by 180 degrees to the front of the asset.
-        if (scene && scene.activeCamera) scene.activeCamera.alpha += Math.PI
+        // scene.clearColor = new BABYLON.Color4(0, 0, 0, 0)
+        // if (scene && scene.activeCamera) scene.activeCamera.alpha += Math.PI
+
+        // var skybox = BABYLON.Mesh.CreateBox("skyBox", 100.0, scene);
+        const skyboxMaterial = new BABYLON.StandardMaterial('skyBox', scene)
+        skyboxMaterial.backFaceCulling = false
+        // skyboxMaterial.disableLighting = true
+        // skybox.material = skyboxMaterial;
+
+        skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture(
+          'http://172.29.137.109:5000/textures/environment.dds',
+          scene,
+        )
+
+        scene.createDefaultSkybox(skyboxMaterial.reflectionTexture, true, 10000)
+
+        console.log(scene)
 
         sceneToRender = scene
       },
