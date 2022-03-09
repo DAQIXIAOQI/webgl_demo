@@ -37,18 +37,13 @@ const BabyLon = () => {
   useEffect(() => {
     let sceneToRender: any = null
     const canvas = document.getElementById('renderCanvas')
-    const engine =
-      canvas &&
-      new BABYLON.Engine(canvas as HTMLCanvasElement, true, {
-        preserveDrawingBuffer: true,
-        stencil: true,
-        disableWebGL2Support: false,
-      })
+    const engine = canvas && new BABYLON.Engine(canvas as HTMLCanvasElement, true, {})
     const scene = engine && new BABYLON.Scene(engine)
     engine &&
       engine.runRenderLoop(function () {
         if (sceneToRender && sceneToRender.activeCamera) {
           sceneToRender.render()
+          sceneToRender.animationGroups[3].play()
         }
       })
 
@@ -70,7 +65,7 @@ const BabyLon = () => {
 
     BABYLON.SceneLoader.Append(
       'https://gw.alipayobjects.com/os/bmw-prod/',
-      'f40ef8dd-4c94-41d4-8fac-c1d2301b6e47.glb',
+      '5e3c1e4e-496e-45f8-8e05-f89f2bd5e4a4.glb',
       scene,
       function (scene) {
         // Create a default arc rotate camera and light.
@@ -85,19 +80,19 @@ const BabyLon = () => {
         // if (scene && scene.activeCamera) scene.activeCamera.alpha += Math.PI
 
         // var skybox = BABYLON.Mesh.CreateBox("skyBox", 100.0, scene);
-        const skyboxMaterial = new BABYLON.StandardMaterial('skyBox', scene)
-        skyboxMaterial.backFaceCulling = false
+        // const skyboxMaterial = new BABYLON.StandardMaterial('skyBox', scene)
+        // skyboxMaterial.backFaceCulling = false
         // skyboxMaterial.disableLighting = true
         // skybox.material = skyboxMaterial;
 
-        skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture(
-          'http://172.29.137.109:5000/textures/environment.dds',
-          scene,
-        )
+        // skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture(
+        //   'http://172.29.139.61:5000/textures/environment.dds',
+        //   scene,
+        // )
 
-        scene.createDefaultSkybox(skyboxMaterial.reflectionTexture, true, 10000)
+        // scene.createDefaultSkybox(skyboxMaterial.reflectionTexture, true, 10000)
 
-        console.log(scene)
+        console.log(scene.animationGroups)
 
         sceneToRender = scene
       },
